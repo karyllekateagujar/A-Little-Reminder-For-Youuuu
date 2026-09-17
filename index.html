@@ -1,0 +1,1018 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Little Reminder For You 💗</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Georgia", serif;
+            overflow: hidden;
+
+            background:
+                radial-gradient(circle at 20% 20%, #ffe8f1 0%, transparent 35%),
+                radial-gradient(circle at 80% 80%, #ffd9e9 0%, transparent 35%),
+                linear-gradient(135deg, #ffd4e5, #fff5f8);
+        }
+
+        /* Soft glowing background */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            filter: blur(80px);
+            top: -150px;
+            left: -150px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255, 150, 190, 0.15);
+            filter: blur(80px);
+            bottom: -150px;
+            right: -150px;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hint {
+            color: #9d5272;
+            margin-bottom: 18px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            animation: softPulse 2s infinite;
+        }
+
+        /* Main card */
+        .card {
+            width: 340px;
+            min-height: 245px;
+            margin: auto;
+
+            padding: 35px 28px;
+
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+
+            box-shadow:
+                0 20px 50px rgba(139, 65, 100, 0.20),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+
+            transition:
+                width 0.7s ease,
+                min-height 0.7s ease,
+                transform 0.4s ease,
+                box-shadow 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow:
+                0 25px 60px rgba(139, 65, 100, 0.27),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        /* Shine effect */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 50%;
+            height: 300%;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.5),
+                transparent
+            );
+
+            transform: rotate(25deg);
+            animation: shine 5s infinite;
+            pointer-events: none;
+        }
+
+        .front,
+        .message,
+        .letter {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Heart */
+        .heart {
+            font-size: 65px;
+            display: inline-block;
+
+            animation: heartbeat 1.5s infinite;
+
+            filter:
+                drop-shadow(
+                    0 6px 8px rgba(200, 70, 110, 0.25)
+                );
+        }
+
+        .title {
+            color: #c6537c;
+            font-size: 25px;
+            margin: 13px 0 8px;
+        }
+
+        .subtitle {
+            color: #8d6171;
+            font-size: 15px;
+        }
+
+        /* First message */
+        .message {
+            display: none;
+            color: #87455f;
+            font-size: 22px;
+            line-height: 1.6;
+            animation: appear 1s ease;
+        }
+
+        .message .small-heart {
+            font-size: 55px;
+        }
+
+        .message small {
+            display: block;
+            margin-top: 20px;
+            color: #b06a87;
+            font-size: 13px;
+        }
+
+        /* Letter */
+        .letter {
+            display: none;
+            text-align: left;
+            color: #5e4651;
+            font-size: 15.5px;
+            line-height: 1.85;
+            animation: appear 1.2s ease;
+        }
+
+        .letter h2 {
+            text-align: center;
+            color: #c6537c;
+            font-size: 25px;
+            margin-top: 0;
+            margin-bottom: 22px;
+        }
+
+        .letter .little-line {
+            text-align: center;
+            color: #d98aa5;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .letter p {
+            margin-bottom: 17px;
+        }
+
+        .highlight {
+            color: #c6537c;
+            font-weight: bold;
+        }
+
+        .big-reminder {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px 10px;
+
+            background: rgba(255, 220, 232, 0.45);
+            border-radius: 20px;
+
+            color: #c6537c;
+            font-size: 19px;
+            line-height: 1.8;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        .signature {
+            text-align: right;
+            color: #c6537c;
+            font-style: italic;
+            margin-top: 25px;
+            padding-top: 15px;
+
+            border-top:
+                1px solid rgba(198, 83, 124, 0.15);
+        }
+
+        /* Card becomes larger for letter */
+        .card.opened {
+            width: 390px;
+            min-height: 600px;
+            max-height: 80vh;
+
+            overflow-y: auto;
+            cursor: default;
+        }
+
+        .card.opened::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .card.opened::-webkit-scrollbar-thumb {
+            background: #e9a6bd;
+            border-radius: 10px;
+        }
+
+        /* Floating decorations */
+        .floating {
+            position: fixed;
+            bottom: -30px;
+
+            pointer-events: none;
+            z-index: 1;
+
+            animation:
+                floatUp linear forwards;
+        }
+
+        /* Small stars */
+        .star {
+            position: fixed;
+
+            color: rgba(255, 255, 255, 0.9);
+
+            animation:
+                twinkle 2s infinite alternate;
+
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Animations */
+
+        @keyframes heartbeat {
+
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.08);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(1.12);
+            }
+        }
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes softPulse {
+
+            0%, 100% {
+                opacity: 0.65;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes shine {
+
+            0% {
+                left: -100%;
+            }
+
+            25% {
+                left: 160%;
+            }
+
+            100% {
+                left: 160%;
+            }
+        }
+
+        @keyframes floatUp {
+
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg)
+                    scale(0.8);
+
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform:
+                    translateY(-115vh)
+                    rotate(360deg)
+                    scale(1.2);
+
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+
+            from {
+                opacity: 0.2;
+                transform: scale(0.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 500px) {
+
+            body {
+                align-items: center;
+            }
+
+            .container {
+                padding: 12px;
+            }
+
+            .card {
+                width: 310px;
+                padding: 30px 23px;
+            }
+
+            .card.opened {
+                width: 94vw;
+                min-height: 550px;
+                max-height: 82vh;
+            }
+
+            .letter {
+                font-size: 14.5px;
+                line-height: 1.75;
+            }
+
+            .title {
+                font-size: 23px;
+            }
+
+            .message {
+                font-size: 20px;
+            }
+
+            .big-reminder {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Hint -->
+        <div class="hint" id="hint">
+            Click the card 💌
+        </div>
+
+
+        <!-- Main Card -->
+        <div
+            class="card"
+            id="card"
+            onclick="openCard()"
+        >
+
+            <!-- ==============================
+                 FRONT OF CARD
+            =============================== -->
+
+            <div
+                class="front"
+                id="front"
+            >
+
+                <div class="heart">
+                    💗
+                </div>
+
+                <div class="title">
+                    A little reminder for you
+                </div>
+
+                <p class="subtitle">
+                    You deserve to hear this today. 🌷
+                </p>
+
+                <p>
+                    Click me...
+                </p>
+
+            </div>
+
+
+            <!-- ==============================
+                 FIRST CLICK MESSAGE
+            =============================== -->
+
+            <div
+                class="message"
+                id="message"
+            >
+
+                <div class="heart small-heart">
+                    🌷
+                </div>
+
+                <p>
+                    I know you can do it.<br>
+
+                    <span class="highlight">
+                        You are stronger than you think.
+                    </span>
+                </p>
+
+                <p style="font-size:17px;">
+                    Please don't give up on yourself. ❤️
+                </p>
+
+                <small>
+                    There's something I want you to read...<br>
+                    Click again 💌
+                </small>
+
+            </div>
+
+
+            <!-- ==============================
+                 SECOND CLICK — LETTER
+            =============================== -->
+
+            <div
+                class="letter"
+                id="letter"
+            >
+
+                <h2>
+                    For You💌
+                </h2>
+
+                <div class="little-line">
+                    ♡ take a little breath ♡
+                </div>
+
+
+                <p>
+                    Hi,
+                </p>
+
+
+                <p>
+                    I just want to remind you of something you might
+                    forget sometimes:
+                    <span class="highlight">
+                        you can do this.
+                    </span>
+                    I know things may feel difficult right now, and
+                    maybe you're tired of trying, but please don't
+                    give up on yourself.
+                </p>
+
+
+                <p>
+                    I know there are days when you feel like you're
+                    not doing enough, when everything seems too hard,
+                    and when you just want to stop.
+                    But please remember how far you've already come.
+                    <span class="highlight">
+                        You've survived every difficult day that came
+                        before this one.
+                    </span>
+                </p>
+
+
+                <p>
+                    That means you're stronger than you think.
+                    You may not realize it, but every time you chose
+                    to keep going, even when things were difficult,
+                    you were already proving how strong you are.
+                </p>
+
+
+                <p>
+                    You don't have to figure everything out all at
+                    once. Take it one day at a time. One step at a
+                    time.
+                    <span class="highlight">
+                        You don't need to have everything figured out
+                        right now.
+                    </span>
+                </p>
+
+
+                <p>
+                    If you need to rest, then rest. If you need to
+                    cry, then cry. If you need a little time to
+                    breathe, take it.
+                    But when you're ready,
+                    <span class="highlight">
+                        please try again.
+                    </span>
+                </p>
+
+
+                <p>
+                    Falling behind doesn't mean you're failing.
+                    Struggling doesn't mean you're weak.
+                    Sometimes life simply gets heavy, and that's okay.
+                    You are allowed to have moments when you don't
+                    feel okay.
+                </p>
+
+
+                <p>
+                    Please don't be too hard on yourself.
+                    You are doing your best with what you have,
+                    and that already means something.
+                    Even if you don't see your progress yet,
+                    it doesn't mean you're not moving forward.
+                </p>
+
+
+                <div class="big-reminder">
+
+                    💗 <br>
+
+                    <strong>
+                        Keep going.<br>
+                        Keep believing in yourself.<br>
+                        Don't give up.
+                    </strong>
+
+                    <br>
+
+                    🌷
+
+                </div>
+
+
+                <p>
+                    There may be moments when you feel like giving
+                    up because you can't see where all of this is
+                    going.
+                    But trust yourself.
+                    <span class="highlight">
+                        Keep going, even if your steps are small.
+                    </span>
+                    Small steps are still steps.
+                </p>
+
+
+                <p>
+                    You don't have to be perfect.
+                    You don't have to be strong every second.
+                    You don't have to pretend that everything is
+                    okay.
+                </p>
+
+
+                <p>
+                    What matters is that you don't stop believing
+                    that things can get better.
+                    Even if today is difficult, tomorrow gives you
+                    another chance to try again.
+                </p>
+
+
+                <p>
+                    And whenever you feel like you can't do it
+                    anymore, remember that you don't have to face
+                    everything by yourself.
+                </p>
+
+
+                <p>
+                    <span class="highlight">
+                        You're not alone.
+                    </span>
+                    You have people who care about you, people who
+                    believe in you, and people who want to see you
+                    succeed.
+                    And I'm one of those people.
+                </p>
+
+
+                <p>
+                    I may not always know exactly what you're going
+                    through, and I may not always have the perfect
+                    words to make everything better.
+                    But I want you to know that I care about you.
+                </p>
+
+
+                <p>
+                    If things become too heavy, you can talk to me.
+                    You don't have to keep everything inside.
+                    You don't have to pretend that you're okay around
+                    me.
+                </p>
+
+
+                <p>
+                    I'll listen.
+                    I'll remind you of your strength when you forget
+                    it.
+                    And I'll keep cheering for you, even on the days
+                    when you don't feel like cheering for yourself.
+                </p>
+
+
+                <p>
+                    Please keep chasing the things you want in life.
+                    Keep working toward your dreams.
+                    Keep believing that all your effort will mean
+                    something someday.
+                </p>
+
+
+                <p>
+                    Maybe the road won't always be easy.
+                    Maybe there will be days when you'll question
+                    yourself.
+                    Maybe you'll feel tired and frustrated.
+                </p>
+
+
+                <p>
+                    But one difficult day doesn't decide your whole
+                    future.
+                    One mistake doesn't define you.
+                    One failure doesn't mean you should stop trying.
+                </p>
+
+
+                <p>
+                    <span class="highlight">
+                        You can start again.
+                    </span>
+                    As many times as you need to.
+                </p>
+
+
+                <p>
+                    One day, you'll look back at this difficult
+                    moment and realize that you made it through.
+                    You'll realize that the version of you who wanted
+                    to give up kept going anyway.
+                </p>
+
+
+                <p>
+                    And I hope when that day comes, you'll be proud
+                    of yourself.
+                    Proud that you didn't quit.
+                    Proud that you kept trying.
+                    Proud that you kept moving forward even when it
+                    wasn't easy.
+                </p>
+
+
+                <p>
+                    So if today is hard, just breathe.
+                    Rest for a little while.
+                    Give yourself some time.
+                    Then try again tomorrow.
+                </p>
+
+
+                <p>
+                    You don't have to solve everything today.
+                    Just take the next step.
+                    Then another.
+                    And another.
+                </p>
+
+
+                <div class="big-reminder">
+
+                    <strong>
+                        I believe in you. ❤️
+                    </strong>
+
+                    <br><br>
+
+                    You can do this.<br>
+                    You are capable.<br>
+                    You are stronger than you think.<br>
+                    And you don't have to do it alone.
+
+                </div>
+
+
+                <p>
+                    And whenever you start doubting yourself,
+                    come back to this letter and remember:
+                </p>
+
+
+                <p
+                    style="
+                        text-align:center;
+                        font-size:19px;
+                        color:#c6537c;
+                    "
+                >
+
+                    <strong>
+                        Don't give up on yourself. 💗<br>
+                        Keep going, even slowly.<br>
+                        Your story isn't over yet.
+                    </strong>
+
+                </p>
+
+
+                <p>
+                    There are still so many things ahead of you.
+                    More memories to make.
+                    More places to see.
+                    More dreams to chase.
+                    More reasons to smile.
+                </p>
+
+
+                <p>
+                    So please keep going.
+                    Not because you have to be strong all the time,
+                    but because
+                    <span class="highlight">
+                        you are worth fighting for.
+                    </span>
+                </p>
+
+
+                <p
+                    style="
+                        text-align:center;
+                        font-size:18px;
+                        color:#c6537c;
+                    "
+                >
+
+                    <strong>
+                        You matter.<br>
+                        You are loved.<br>
+                        You are not alone.<br>
+                        And I believe in you. ❤️
+                    </strong>
+
+                </p>
+
+
+                <p class="signature">
+                    Always cheering for you,<br>
+                    Karylle💗
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+        let clicks = 0;
+
+
+        function openCard() {
+
+            clicks++;
+
+            const front =
+                document.getElementById("front");
+
+            const message =
+                document.getElementById("message");
+
+            const letter =
+                document.getElementById("letter");
+
+            const card =
+                document.getElementById("card");
+
+            const hint =
+                document.getElementById("hint");
+
+
+            /* FIRST CLICK */
+
+            if (clicks === 1) {
+
+                front.style.display = "none";
+
+                message.style.display = "block";
+
+                hint.innerHTML =
+                    "Click again to open your letter 💌";
+
+            }
+
+
+            /* SECOND CLICK */
+
+            else if (clicks === 2) {
+
+                message.style.display = "none";
+
+                card.classList.add("opened");
+
+                letter.style.display = "block";
+
+                hint.innerHTML =
+                    "💗 A little reminder just for you 💗";
+
+            }
+
+        }
+
+
+        /* =========================================
+           FLOATING HEARTS / FLOWERS / STARS
+        ========================================== */
+
+        function createFloating() {
+
+            const item =
+                document.createElement("div");
+
+            item.classList.add("floating");
+
+
+            const decorations = [
+
+                "💗",
+                "💕",
+                "💖",
+                "💞",
+                "🌸",
+                "🌷",
+                "🌹",
+                "✨",
+                "♡"
+
+            ];
+
+
+            item.innerHTML =
+                decorations[
+                    Math.floor(
+                        Math.random() *
+                        decorations.length
+                    )
+                ];
+
+
+            item.style.left =
+                Math.random() * 100 + "vw";
+
+
+            item.style.fontSize =
+                (15 + Math.random() * 18) + "px";
+
+
+            item.style.animationDuration =
+                (5 + Math.random() * 5) + "s";
+
+
+            document.body.appendChild(item);
+
+
+            setTimeout(() => {
+
+                item.remove();
+
+            }, 10000);
+
+        }
+
+
+        function createStar() {
+
+            const star =
+                document.createElement("div");
+
+            star.classList.add("star");
+
+            star.innerHTML = "✦";
+
+
+            star.style.left =
+                Math.random() * 100 + "vw";
+
+
+            star.style.top =
+                Math.random() * 100 + "vh";
+
+
+            star.style.fontSize =
+                (8 + Math.random() * 10) + "px";
+
+
+            star.style.animationDelay =
+                Math.random() * 2 + "s";
+
+
+            document.body.appendChild(star);
+
+
+            setTimeout(() => {
+
+                star.remove();
+
+            }, 4000);
+
+        }
+
+
+        /* Start decorations */
+
+        setInterval(
+            createFloating,
+            650
+        );
+
+
+        setInterval(
+            createStar,
+            900
+        );
+
+    </script>
+
+</body>
+</html>
